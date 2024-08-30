@@ -47,7 +47,7 @@ The Product Page is where you can add, delete, edit, and save products.
 ![Manage Product](https://github.com/user-attachments/assets/dba8950a-ca06-4d78-9a68-3eaab8a58fbb)   
 
 
-To add an image you must first create a category.   
+To add a product you must first create a category.   
 
 So go to the category page by clicking the categories in the header.   
 
