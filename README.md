@@ -30,6 +30,16 @@ If payment is successful you will be redirected to the Payment Complete Page.
 
 ![PaymentComplete](https://github.com/user-attachments/assets/ec122909-af6f-47aa-9075-849a87394a36)
 
+### Admin Panel   
+
+Upon running the Web App a Default Admin is created.  
+
+- Email: admin@gmail.com
+- Password: Admin@#1234
+
+![DefaultAdmin](https://github.com/user-attachments/assets/d37f6754-a8de-46fb-a8fd-d2df555c5437)  
+
+
 Click on Products on the header to be redirected to the Products Page.   
 
 The Product Page is where you can add, delete, edit, and save products.   
