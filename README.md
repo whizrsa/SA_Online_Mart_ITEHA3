@@ -37,10 +37,14 @@ The Product Page is where you can add, delete, edit, and save products.
 ![Manage Product](https://github.com/user-attachments/assets/dba8950a-ca06-4d78-9a68-3eaab8a58fbb)   
 
 
-To add an image you must first create a category.
-So go to the category page by clicking the category in the header.
-Once you have created a category, you can update and delete the category.
-![ProductCategory](https://github.com/user-attachments/assets/353bf280-1394-4027-9f99-314473c70e89)
+To add an image you must first create a category.   
+
+So go to the category page by clicking the category in the header.   
+
+Once you have created a category, you can update and delete the category.    
+
+![ProductCategory](https://github.com/user-attachments/assets/353bf280-1394-4027-9f99-314473c70e89)   
+
 
 ### Setting up Database
 **The name of the Database must be OnlineMart**
