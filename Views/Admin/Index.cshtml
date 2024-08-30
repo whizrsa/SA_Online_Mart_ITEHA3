@@ -15,20 +15,19 @@
         <div class="box">
             <h3>Welcome!</h3>
             <p>@Model.User.FirstName</p>
-            <a href="" >update profile</a>
         </div>
 
         <div class="box">
             <h3>Number of Products</h3>
             <p>@Model.ProductCount<p>
-            <a href="" >see products</a>
+            <a asp-controller="Product" asp-action="Index">See Products</a>
         </div>
 
         <div class="box">
             
             <h3>Number of Customers</h3>
             <p>@Model.CustomerCount</p>
-            <a href="" >see users</a>
+            <a asp-controller="Customers" asp-action="Index">View Customers</a>
         </div>
 
     </div>
