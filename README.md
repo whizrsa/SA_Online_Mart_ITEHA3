@@ -47,7 +47,8 @@ Once you have created a category, you can update and delete the category.
 
 
 ### Setting up Database
-**The name of the Database must be OnlineMart**
+**The name of the Database must be OnlineMart**   
+
 ![onmart](https://github.com/user-attachments/assets/d9749d2b-8491-43f5-a987-ab9adfae533d)   
 
 
