@@ -26,7 +26,7 @@ Enter any email or CVC number, those do not matter as much as this is for testin
 ![PaymentGateway](https://github.com/user-attachments/assets/a34107a7-28d6-4b4a-8099-fd384e33a274)   
 
 
-If payment is successful you will be redirected the Payment Complete Page.   
+If payment is successful you will be redirected to the Payment Complete Page.   
 
 ![PaymentComplete](https://github.com/user-attachments/assets/ec122909-af6f-47aa-9075-849a87394a36)
 
@@ -39,7 +39,7 @@ The Product Page is where you can add, delete, edit, and save products.
 
 To add an image you must first create a category.   
 
-So go to the category page by clicking the category in the header.   
+So go to the category page by clicking the categories in the header.   
 
 Once you have created a category, you can update and delete the category.    
 
@@ -69,7 +69,7 @@ After Deleting the Migrations folder Open a connection to the OnlineMart Databas
 - After Build succeeded 
 - Type Update-Database
 
-This will automatically create the database table for you based on the ApplicationDbContext class.    
+This will automatically create the database table based on the ApplicationDbContext class.    
 
 ![update](https://github.com/user-attachments/assets/379e1861-7549-4629-8561-e18eba2f68e6)
 
