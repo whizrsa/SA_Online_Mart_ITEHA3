@@ -32,7 +32,7 @@ namespace SA_Online_Mart.Controllers
 
         [HttpPost]
         public IActionResult Processing(string stripeToken, string stripeEmail)
-        {
+        { 
             // Create customer
             //Future Updates could be allowing a logged in users details to be added to the stripe built in function
             var optionsCust = new CustomerCreateOptions
