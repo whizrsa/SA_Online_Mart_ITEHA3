@@ -103,7 +103,7 @@ namespace SA_Online_Mart.Controllers
                 cartItems = new List<CartItem>();  // Initialize with an empty list
             }
 
-            var cart = new Cart { Items = cartItems };  // Wrap items in a Cart object
+            var cart = new Cart { Items = cartItems };  // Wrapping items in a Cart object
             return View(cart);
         }
     }
