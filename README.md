@@ -30,3 +30,25 @@ So go to the category page by clicking the category in the header.
 Once you have created a category, you can update and delete the category.
 ![ProductCategory](https://github.com/user-attachments/assets/353bf280-1394-4027-9f99-314473c70e89)
 
+### Setting up Database
+**The name of the Database must be OnlineMart**
+![onmart](https://github.com/user-attachments/assets/d9749d2b-8491-43f5-a987-ab9adfae533d)
+
+Inside Visual Studio Delete the Migrations Folder
+![migrations](https://github.com/user-attachments/assets/503dd691-daf6-4ab0-b000-5eea5ddefb4b)
+
+After Deleting the Migrations folder Open a connection to the OnlineMart Database
+![connection](https://github.com/user-attachments/assets/3d60fca9-107f-4246-a5be-e792821e515d)
+
+- Open Nuget Manager Console
+- Type Add-Migration InitialCreate
+
+![migrate](https://github.com/user-attachments/assets/ab0ee366-f83d-4dd8-b623-952cb320f8aa)
+
+- After Build succeeded 
+- Type Update-Database
+
+This will automatically create the database table for you based on the ApplicationDbContext class
+![update](https://github.com/user-attachments/assets/379e1861-7549-4629-8561-e18eba2f68e6)
+
+
