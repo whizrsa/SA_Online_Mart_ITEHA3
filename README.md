@@ -11,3 +11,11 @@ Add Items to cart.
 After Clicking the Checkout link, you are redirected to the Checkout Page
 ![CheckoutPage](https://github.com/user-attachments/assets/a43d3fba-0573-42dc-bc42-daa1692bbc20)
 
+Click Pay With Card and you will be redirected to the Payment Gateway.
+Find a card number on the official Stripe Website.
+You can click Test Mode to be redirected to the Stripe Page. 
+Copy the card number and paste it on the payment gateway.
+Enter any email or CVC number, those do not matter as much as this is for testing purposes.
+![PaymentGateway](https://github.com/user-attachments/assets/a34107a7-28d6-4b4a-8099-fd384e33a274)
+
+
