@@ -1,0 +1,51 @@
+﻿.main-page
+{
+    margin-top: .1rem;
+}
+
+.swiper {
+    width: 100%;
+    height: 400px; /* Adjust this value to make the slider more horizontal */
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+
+.swiper-slide img {
+    width: 100%;
+    height: 80vh; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures image covers the container while maintaining aspect ratio */
+}
+
+.content {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.swiper-pagination-bullet {
+    background-color: white; /* Customize bullet color */
+}
+
+.btnH {
+color: antiquewhite;
+font-size: 20px;
+margin: 0px;
+padding: 0px;
+font-weight: 500;
+}
+
+/*  home category section starts  */ 
+.heading {
+    display: block;
+    text-align:center;
+    margin-top: 1rem;
+}
+

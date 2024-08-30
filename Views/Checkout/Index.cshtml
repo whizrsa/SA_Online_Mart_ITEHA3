@@ -1,0 +1,31 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<SA_Online_Mart.Data.StripeSettings> Stripe
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="text-center">
+    <h3>Checkout Page</h3>
+    <table cellpadding="2" cellspacing="2" border="1">
+        <tr>
+            <th>Total Amount To Pay</th>
+        </tr>
+        <tr>
+            <td>@String.Format("{0:C}", Math.Round(ViewBag.DollarAmount, 2))</td>
+        </tr>
+    </table>
+
+    <form asp-action="Processing" asp-controller="Checkout" method="post">
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="@Stripe.Value.PublishableKey"
+                data-amount="@ViewBag.Total"
+                data-name="SA Online Mart"
+                data-description="Buying Products"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="en"
+                data-currency="nzd"
+                data-zip-code="true">
+        </script>
+    </form>
+</div>

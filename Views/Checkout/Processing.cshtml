@@ -1,0 +1,17 @@
+﻿@model AppUser
+@{
+    Layout = "_Layout";
+}
+
+<div class="text-center">
+    <form asp-action="Processing" asp-controller="Checkout" method="post">
+        <label class="text-info">
+            Your payment has been successfully processed!
+        </label>
+        <p class="blockquote text-center">
+            The details of the transaction are <br />
+            Customer: @ViewBag.Customer <br />
+            Amount: NZ$ @ViewBag.AmountPaid
+        </p>
+    </form>
+</div>

@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SA_Online_Mart.Models
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SA_Online_Mart</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SA_Online_Mart.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h3>Online Mart</h3>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("admin"))
+                {
+                    <nav class="nav-bar">
+                        <a asp-controller="Admin" asp-action="Index">Dashboard</a>
+                        <a asp-controller="Product" asp-action="Index">Products</a>
+                        <a asp-controller="Category" asp-action="Index">Categories</a>
+                        <a asp-controller="Customers" asp-action="Index">Customers</a>
+                    </nav>
+                }
+                else
+                {
+                    <nav class="nav-bar">
+                        <a asp-area="Views" asp-controller="Home" asp-action="Index">Home</a>
+                        <a asp-area="Views" asp-controller="Shop" asp-action="Index">Shop</a>
+                        <a asp-area="Views" asp-controller="Cart" asp-action="Index">Cart</a>
+                        <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
+                    </nav>
+                }
+            }
+            else
+            {
+                <nav class="nav-bar">
+                    <a asp-area="Views" asp-controller="Home" asp-action="Index">Home</a>
+                    <a asp-area="Views" asp-controller="Shop" asp-action="Index">Shop</a>
+                    <a asp-area="Views" asp-controller="Cart" asp-action="Index">Cart</a>
+                    <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
+                </nav>
+            }
+
+            <partial name="_LoginPartial" />
+        </header>
+
+        <div class="container content-area">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2024 - SA_Online_Mart - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

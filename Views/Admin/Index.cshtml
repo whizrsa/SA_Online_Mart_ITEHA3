@@ -1,0 +1,37 @@
+﻿@using SA_Online_Mart.ViewModel
+@model AdminDashboardViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<section class="dashboard">
+    <h1 class="heading">Dashboard</h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <h3>Welcome!</h3>
+            <p>@Model.User.FirstName</p>
+            <a href="" >update profile</a>
+        </div>
+
+        <div class="box">
+            <h3>Number of Products</h3>
+            <p>@Model.ProductCount<p>
+            <a href="" >see products</a>
+        </div>
+
+        <div class="box">
+            
+            <h3>Number of Customers</h3>
+            <p>@Model.CustomerCount</p>
+            <a href="" >see users</a>
+        </div>
+
+    </div>
+
+</section>
+

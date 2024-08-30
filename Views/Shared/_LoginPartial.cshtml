@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SA_Online_Mart.Models
+
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        if (User.IsInRole("admin"))
+        {
+            <li class="nav-item dropdown nav-bar">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">Admin</a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item dropdown nav-bar">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">User</a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a></li>
+                </ul>
+            </li>
+        }
+
+    }
+    else
+    {
+        <div class="nav-bar">
+            <a id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </div>
+
+
+    }
+</ul>

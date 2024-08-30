@@ -1,0 +1,82 @@
+html {
+    font-size: 14px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+header {
+    display: flex;
+    background-color: #258cfb;
+    color: antiquewhite;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: 10vh;
+    padding: .5rem;
+}
+
+
+.profile {
+    font-size: 24px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+}
+
+
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+}
+
+.nav-bar a {
+     text-decoration: none;
+     color: antiquewhite;
+     margin-right: 1.5rem;
+}
+
+ 
+.nav-bar a:hover{
+    color: aqua
+}
+
+.footer {
+    background-color: #258cfb;
+    color: antiquewhite;
+}
+
+.footer .container {
+    color: antiquewhite
+}
+
+.footer .container a {
+    color: antiquewhite;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.footer .container a:hover{
+    color:red;
+}
+
+/* Cart Section*/
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}

@@ -1,0 +1,20 @@
+﻿@model SA_Online_Mart.Models.Product
+
+<div class="product-detail">
+    <div>
+        <img src="@Model.ImageUrl" alt="@Model.ProductName" />
+    </div>
+    
+    <div class="product-info">
+        <h2>@Model.ProductName</h2>
+        <p>Price: R @Model.Price</p>
+        <p>Category: @Model.Category.CategoryName</p>
+        <p>Description: @Model.Description</p>
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" name="productId" value="@Model.ProductId" class="btn btn-success"/>
+            <button type="submit" class="btn btn-success">Add to Cart</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>
+        </form>
+        
+    </div>
+</div>

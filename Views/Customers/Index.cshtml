@@ -1,0 +1,22 @@
+﻿@model IEnumerable<AppUser>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section class="dashboard">
+    <h1 class="heading">Customers</h1>
+
+        <div class="box-container">
+        @foreach (var item in Model)
+        {
+            <div class="box">
+                <h3>Customer</h3>
+                <p>Full Name: @item.FirstName @item.LastName</p>
+                <p>Email: @item.Email</p>
+                <p>Phone Number: @item.PhoneNumber</p>
+            </div>
+        }
+    </div>
+</section>
