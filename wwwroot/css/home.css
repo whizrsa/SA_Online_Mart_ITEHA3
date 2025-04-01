@@ -49,3 +49,10 @@ font-weight: 500;
     margin-top: 1rem;
 }
 
+/*
+    Card 
+*/
+.card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease-in-out;
+}
