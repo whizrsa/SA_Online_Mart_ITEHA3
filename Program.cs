@@ -61,6 +61,7 @@ namespace SA_Online_Mart
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             StripeConfiguration.ApiKey = "sk_test_51PsXyGRtHdFnLFNcD1ODhZnmSOmvjTcYJch6UoFPS2iQHEzJWJpKHNPoT9knnZ1JZ9aA8dCPLyrJzcwdIabVW1Ao00vFehp2lh";
 
 

@@ -4,7 +4,105 @@
     ViewData["Title"] = "Your Cart";
 }
 
-<table class="table">
+<style>
+    /* Table Styling */
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .cart-table th {
+            background-color: #2C033A;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .cart-table td {
+            padding: 12px;
+            border-bottom: 1px solid #8C98A5;
+        }
+
+        .cart-table img {
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Form Styling */
+        .cart-table input[type="number"] {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #8C98A5;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #2C033A;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 5px;
+        transition: background 0.3s ease-in-out;
+    }
+
+        .btn-primary:hover {
+            background-color: #520662;
+        }
+
+    .btn-danger {
+        background-color: #8C98A5;
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 5px;
+        transition: background 0.3s ease-in-out;
+    }
+
+        .btn-danger:hover {
+            background-color: #6D7C8A;
+        }
+
+    /* Total Price Styling */
+    .cart-total {
+        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #2C033A;
+    }
+
+    /* Links */
+    .cart-links {
+        margin-top: 20px;
+    }
+
+        .cart-links a {
+            text-decoration: none;
+            color: white;
+            background-color: #2C033A;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-right: 10px;
+            display: inline-block;
+            transition: background 0.3s ease-in-out;
+        }
+
+            .cart-links a:hover {
+                background-color: #520662;
+            }
+</style>
+
+<table class="cart-table">
     <thead>
         <tr>
             <th>Product</th>
@@ -15,7 +113,6 @@
         </tr>
     </thead>
     <tbody>
-   
         @foreach (var item in Model.Items)
         {
             <tr>
@@ -40,10 +137,11 @@
     </tbody>
 </table>
 
-<div>
-    <h3>Total: R @Model.Items.Sum(i => i.Product.Price * i.Quantity)</h3>
+<div class="cart-total">
+    Total: R @Model.Items.Sum(i => i.Product.Price * i.Quantity)
 </div>
 
-<br />
-<a asp-controller="Shop" asp-action="index">Continue Shopping</a>
-<a asp-controller="Checkout" asp-action="Index">Go To Checkout</a>
+<div class="cart-links">
+    <a asp-controller="Shop" asp-action="Index">Continue Shopping</a>
+    <a asp-controller="Checkout" asp-action="Index">Go To Checkout</a>
+</div>
