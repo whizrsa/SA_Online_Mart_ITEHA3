@@ -1,10 +1,12 @@
 ﻿@model Category
+
 @{
     ViewData["Title"] = "Edit Category";
 }
-<div class="container shadow p-5">
-    <div class="row">
-        <h2>Edit Category</h2>
+
+<div class="container mt-5 p-4 shadow-lg bg-white rounded">
+    <div class="row pb-3 text-center">
+        <h2 class="fw-bold text-dark">✏️Edit Category</h2>
     </div>
 
     <form method="post" asp-action="Edit">
@@ -19,7 +21,7 @@
                 <span asp-validation-for="CategoryName" class="alert-danger"></span>
             </div>
         </div>
-        <button type="submit" class="btn btn-success">Update</button>
-        <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Back</a>
+        <button type="submit" class="btn btn-success fw-bold px-4">Update</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary fw-bold">⬅️ Back to List</a>
     </form>
 </div>

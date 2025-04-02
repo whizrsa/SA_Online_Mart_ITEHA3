@@ -3,42 +3,41 @@
     ViewData["Title"] = "Category List";
 }
 
-
-<div class="container shadow p-5">
+<div class="container mt-5 p-4 shadow-lg bg-white rounded">
     @if (TempData["SuccessMsg"] != null)
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success text-center fw-bold" role="alert">
             @TempData["SuccessMsg"]
         </div>
     }
-    <h1 class="text-center">Category List</h1>
-    <div class="col mb-3">
-        <a asp-controller="Category" asp-action="Create" class="btn btn-primary">Add Category</a>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-dark">📂 Category List</h1>
+        <a asp-controller="Category" asp-action="Create" class="btn btn-primary fw-bold">➕ Add Category</a>
     </div>
-    <table class="table table-bordered table-hover">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Category Id</th>
-                <th scope="col"> Category Name</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+
+    <div class="table-responsive">
+        <table class="table table-hover text-center align-middle">
+            <thead class="table-dark text-white">
                 <tr>
-                    <td width="30%">
-                        @item.CategoryId
-                    </td>
-                    <td width="40%">
-                        @item.CategoryName
-                    </td>
-                    <td width="30%">
-                        <a asp-controller="Category" asp-action="Edit" asp-route-categoryId="@item.CategoryId" class=" btn btn-primary">Edit</a>&nbsp;
-                        <a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@item.CategoryId" class="btn btn-danger">Delete</a>
-                    </td>
+                    <th scope="col">Category ID</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.CategoryId</td>
+                        <td>@item.CategoryName</td>
+                        <td>
+                            <a asp-controller="Category" asp-action="Edit" asp-route-categoryId="@item.CategoryId" class="btn btn-success btn-sm fw-bold">✏️ Edit</a>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@item.CategoryId" class="btn btn-danger btn-sm fw-bold">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

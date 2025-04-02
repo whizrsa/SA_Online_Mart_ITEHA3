@@ -12,26 +12,56 @@ body {
 
 main {
     flex-grow: 1;
-    padding: 0px 12px;
+    padding: 80px 12px 12px;
 }
 
 header {
     display: flex;
-    background-color: #2C033A;
-    color: #7F7184;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
-    height: 10vh;
-    padding: .5rem;
-    position: sticky;
+    background-color: #2C033A;
+    color: #7F7184;
+    padding: 1rem 5%;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #7D4B8F;
 }
 
+/* Brand */
+header h3 {
+    font-size: 28px;
+    color: #9D00D5;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+/* Navbar */
+.nav-bar {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 18px;
+}
+
+/* Navbar links */
+.nav-bar a {
+    text-decoration: none;
+    color: #7D4B8F;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.nav-bar a:hover {
+    color: #9D00D5;
+    background-color: rgba(157, 0, 213, 0.1);
+    transform: translateY(-2px);
+}
 
 .profile {
     font-size: 24px;
@@ -42,62 +72,91 @@ header {
     text-align: center;
 }
 
-.nav-bar {
-    display: flex;
-    justify-content: space-between;
-    font-size: 24px;
-}
-
-.nav-bar a {
-     text-decoration: none;
-     color: #7D4B8F;
-     margin-right: 1.5rem;
-}
-
- 
-.nav-bar a:hover{
-    color: #9D00D5
-}
-
-
 footer {
-    flex-shrink: 0; /* Prevents footer from shrinking */
-    display: flex;
-    justify-content: space-evenly;
-    background-color: #2C033A;
-    color: #8C98A5;
-    text-align: center;
-    align-items: flex-start;
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-    margin-top: .5rem;
+background-color: #2C033A;
+color: #8C98A5;
+padding: 40px 10%;
+border-top: 3px solid #9D00D5;
+font-size: 16px;
+margin-top: 10px;
 }
 
-footer div{
-    display: flex;
+.footer-container {
+display: flex;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 20px;
+}
+
+.footer-container div {
+flex: 1;
+min-width: 200px;
+}
+
+.footer-container h4 {
+font-size: 18px;
+color: #9D00D5;
+margin-bottom: 12px;
+}
+
+/* Footer links and social media */
+.footer-links a,
+.footer-social a {
+display: flex;
+align-items: center;
+gap: 8px;
+text-decoration: none;
+color: #7F7184;
+transition: all 0.3s ease-in-out;
+margin-bottom: 8px;
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+color: #9D00D5;
+transform: translateX(5px);
+}
+
+/* Social icons */
+.footer-social i {
+font-size: 18px;
+color: #7F7184;
+transition: color 0.3s ease-in-out;
+}
+
+.footer-social a:hover i {
+color: #9D00D5;
+}
+
+/* Contact info */
+.footer-contact p {
+margin: 5px 0;
+}
+
+.footer-bottom {
+text-align: center;
+margin-top: 20px;
+padding-top: 10px;
+border-top: 1px solid #9D00D5;
+}
+.footer-bottom p {
+color: #7F7184;
+font-size: 14px;
+}
+
+@media (max-width: 768px) {
+.footer-container {
     flex-direction: column;
-    justify-content: flex-start;
+    text-align: center;
 }
 
-footer div a {
-    text-align: start;
-    
+.footer-links, .footer-social, .footer-contact {
+    margin-bottom: 15px;
 }
 
-footer div a, footer div a i {
-    text-decoration: none;
-    color: #7F7184 !important;
+.footer-links a, .footer-social a {
+    justify-content: center;
 }
-
-footer div a:hover {
-    color: #9D00D5;
-    transform: translateY(-2px);
-    transition: all 0.3s ease-in-out;
-}
-
-footer div a i {
-    color: #7F7184;
 }
 
 /* Cart Section*/

@@ -3,9 +3,9 @@
     ViewData["Title"] = "Create Category";
 }
 
-<div class="container shadow p-5">
-    <div class="row">
-        <h1>Add Category</h1>
+<div class="container mt-5 p-4 shadow-lg bg-white rounded">
+    <div class="row pb-3 text-center">
+        <h1>➕ Add Category</h1>
     </div>
     <form method="post">
         @*<div asp-validation-summary="All" class="alert-danger"></div> *@
@@ -14,7 +14,7 @@
             <label for="CategoryName">Category Name</label>
             <span asp-validation-for="CategoryName" class="alert-danger"></span>
         </div>
-        <button type="submit" class="btn btn-success">Save</button>
-        <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Back</a>
+        <button type="submit" class="btn btn-success fw-bold px-4">Save</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary fw-bold">⬅️ Back to List</a>
     </form>
 </div>
