@@ -18,30 +18,19 @@
     <link rel="stylesheet" href="~/SA_Online_Mart.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="wrapper">
-        <header>
-            <h3>Online Mart</h3>
+    <header>
+        <h3>Online Mart</h3>
 
-            @if (SignInManager.IsSignedIn(User))
+        @if (SignInManager.IsSignedIn(User))
+        {
+            if (User.IsInRole("admin"))
             {
-                if (User.IsInRole("admin"))
-                {
-                    <nav class="nav-bar">
-                        <a asp-controller="Admin" asp-action="Index">Dashboard</a>
-                        <a asp-controller="Product" asp-action="Index">Products</a>
-                        <a asp-controller="Category" asp-action="Index">Categories</a>
-                        <a asp-controller="Customers" asp-action="Index">Customers</a>
-                    </nav>
-                }
-                else
-                {
-                    <nav class="nav-bar">
-                        <a asp-area="Views" asp-controller="Home" asp-action="Index">Home</a>
-                        <a asp-area="Views" asp-controller="Shop" asp-action="Index">Shop</a>
-                        <a asp-area="Views" asp-controller="Cart" asp-action="Index">Cart</a>
-                        <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
-                    </nav>
-                }
+                <nav class="nav-bar">
+                    <a asp-controller="Admin" asp-action="Index">Dashboard</a>
+                    <a asp-controller="Product" asp-action="Index">Products</a>
+                    <a asp-controller="Category" asp-action="Index">Categories</a>
+                    <a asp-controller="Customers" asp-action="Index">Customers</a>
+                </nav>
             }
             else
             {
@@ -52,31 +41,40 @@
                     <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
                 </nav>
             }
-
-            <partial name="_LoginPartial" />
-        </header>
-
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-
-        <footer>
-            <div>
+        }
+        else
+        {
+            <nav class="nav-bar">
                 <a asp-area="Views" asp-controller="Home" asp-action="Index">Home</a>
                 <a asp-area="Views" asp-controller="Shop" asp-action="Index">Shop</a>
                 <a asp-area="Views" asp-controller="Cart" asp-action="Index">Cart</a>
                 <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
-            </div>
+            </nav>
+        }
 
-            <div>
-                <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i> Facebook</a>
-                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i> LinkedIn</a>
-            </div>
+        <partial name="_LoginPartial" />
+    </header>
 
-        </footer>
-    </div>
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div>
+            <a asp-area="Views" asp-controller="Home" asp-action="Index">Home</a>
+            <a asp-area="Views" asp-controller="Shop" asp-action="Index">Shop</a>
+            <a asp-area="Views" asp-controller="Cart" asp-action="Index">Cart</a>
+            <a asp-area="Views" asp-controller="Home" asp-action="Aboutus">About</a>
+        </div>
+
+        <div>
+            <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i> Facebook</a>
+            <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        </div>
+
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>

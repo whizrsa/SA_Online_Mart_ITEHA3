@@ -71,6 +71,7 @@ footer {
     text-align: center;
     padding: 10px;
     width: 100%;
+    margin-top: .5rem;
 }
 
 footer div{
@@ -97,10 +98,6 @@ footer div a:hover {
 
 footer div a i {
     color: #7F7184;
-}
-
-.footer .container a:hover{
-    color:red;
 }
 
 /* Cart Section*/

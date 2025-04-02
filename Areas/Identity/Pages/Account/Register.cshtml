@@ -4,80 +4,70 @@
     ViewData["Title"] = "Register";
 }
 
+<div class="container min-vh-100 d-flex justify-content-center align-items-center mt-2">
+    <div class="card shadow-lg border-0 rounded" style="width: 450px; background-color: #ffffff;">
+        <div class="card-body p-4">
+            <h3 class="text-center text-dark mb-3">Create an Account</h3>
+            <hr class="mb-4">
 
-<div class="row">
-    <div class="col-lg-6 mx-auto rounded border p-3">
-        <!--Styling page-->
-        <h2 class="text-center mb-3">Register</h2>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">FirstName</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.FirstName">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <!-- First Name -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">First Name</label>
+                    <input asp-for="Input.FirstName" class="form-control" placeholder="Enter your first name">
                     <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">LastName</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.LastName">
+                <!-- Last Name -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Last Name</label>
+                    <input asp-for="Input.LastName" class="form-control" placeholder="Enter your last name">
                     <span asp-validation-for="Input.LastName" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Email</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.Email">
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email Address</label>
+                    <input asp-for="Input.Email" class="form-control" placeholder="Enter your email">
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">PhoneNumber</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.PhoneNumber">
+                <!-- Phone Number -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Phone Number</label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Enter your phone number">
                     <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Address</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.Address">
+                <!-- Address -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Address</label>
+                    <input asp-for="Input.Address" class="form-control" placeholder="Enter your address">
                     <span asp-validation-for="Input.Address" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Password</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.Password">
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter your password">
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-4 col-form-label">Confirm Password</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Input.ConfirmPassword">
+                <!-- Confirm Password -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Confirm Password</label>
+                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password">
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <div class="offset-sm-4 col-sm-4 d-grid">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                <!-- Buttons -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn text-white fw-bold" style="background-color: #2C033A;">Register</button>
+                    <a class="btn btn-outline-secondary" href="/" role="button">Cancel</a>
                 </div>
-                <div class="col-sm-4 d-grid">
-                    <a class="btn btn-primary" href="/" role="button">Cancel</a>
-                </div>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
-
 </div>
