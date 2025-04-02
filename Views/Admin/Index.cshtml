@@ -1,36 +1,41 @@
 ﻿@using SA_Online_Mart.ViewModel
 @model AdminDashboardViewModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
     ViewData["Title"] = "Admin Page";
 }
 
-<section class="dashboard">
-    <h1 class="heading">Dashboard</h1>
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>Welcome!</h3>
-            <p>@Model.User.FirstName</p>
-        </div>
-
-        <div class="box">
-            <h3>Number of Products</h3>
-            <p>@Model.ProductCount<p>
-            <a asp-controller="Product" asp-action="Index">See Products</a>
-        </div>
-
-        <div class="box">
-            
-            <h3>Number of Customers</h3>
-            <p>@Model.CustomerCount</p>
-            <a asp-controller="Customers" asp-action="Index">View Customers</a>
-        </div>
-
+<section class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-dark">Admin Dashboard</h1>
+        <p class="text-muted">Manage and monitor your store activities</p>
     </div>
 
-</section>
+    <div class="row g-4">
+        <!-- Welcome Box -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded text-center p-4" style="background-color: #2C033A; color: #ffffff;">
+                <h3 class="fw-bold">Welcome!</h3>
+                <p class="fs-5">@Model.User.FirstName</p>
+            </div>
+        </div>
 
+        <!-- Product Count Box -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded text-center p-4 bg-white">
+                <h3 class="fw-bold text-dark">Total Products</h3>
+                <p class="fs-4 fw-bold text-primary">@Model.ProductCount</p>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary mt-2">📦 Manage Products</a>
+            </div>
+        </div>
+
+        <!-- Customer Count Box -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded text-center p-4 bg-white">
+                <h3 class="fw-bold text-dark">Total Customers</h3>
+                <p class="fs-4 fw-bold text-success">@Model.CustomerCount</p>
+                <a asp-controller="Customers" asp-action="Index" class="btn btn-outline-success mt-2">👥 View Customers</a>
+            </div>
+        </div>
+    </div>
+</section>

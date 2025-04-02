@@ -1,21 +1,26 @@
 ﻿@model IEnumerable<AppUser>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
 @{
+    ViewData["Title"] = "Customers";
 }
 
-<section class="dashboard">
-    <h1 class="heading">Customers</h1>
+<section class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-dark">Customer List</h1>
+        <p class="text-muted">View and manage registered customers</p>
+    </div>
 
-        <div class="box-container">
+    <div class="row g-4">
         @foreach (var item in Model)
         {
-            <div class="box">
-                <h3>Customer</h3>
-                <p>Full Name: @item.FirstName @item.LastName</p>
-                <p>Email: @item.Email</p>
-                <p>Phone Number: @item.PhoneNumber</p>
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 rounded p-4" style="background-color: #F8F9FA;">
+                    <h3 class="fw-bold text-primary">👤 Customer</h3>
+                    <hr>
+                    <p class="fw-bold text-dark">Full Name: <span class="fw-normal">@item.FirstName @item.LastName</span></p>
+                    <p class="fw-bold text-dark">Email: <span class="fw-normal">@item.Email</span></p>
+                    <p class="fw-bold text-dark">Phone: <span class="fw-normal">@item.PhoneNumber</span></p>
+                </div>
             </div>
         }
     </div>
