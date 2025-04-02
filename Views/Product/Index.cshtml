@@ -2,58 +2,52 @@
 @model List<ProductListViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Product List";
 }
 
-<div class="container shadow p-5">
+<div class="container mt-5 p-4 shadow-lg bg-white rounded">
     @if (TempData["SuccessMsg"] != null)
     {
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success text-center fw-bold" role="alert">
             @TempData["SuccessMsg"]
         </div>
     }
-    <h1 class="text-center">Product List</h1>
 
-    <div class="col mb-3">
-        <a asp-controller="Product" asp-action="Create" class="btn btn-primary">Add Product</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold text-dark">📦 Product List</h1>
+        <a asp-controller="Product" asp-action="Create" class="btn btn-primary fw-bold">➕ Add Product</a>
     </div>
-    <table class="table table-light table-hover">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Product Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Category</th>
-                <th scope="col">Image</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
 
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-hover text-center align-middle">
+            <thead class="table-dark text-white">
                 <tr>
-                    <td width="15%">
-                        @item.ProductName
-                    </td>
-                    <td width="15%">
-                        @item.Description
-                    </td>
-                    <td width="10%">
-                        @item.Price
-                    </td>
-                    <td width="10%">
-                        @item.CategoryName
-                    </td>
-                    <td width="20%">
-                        <img src="@item.ImageUrl" class="img-thumbnail" />
-                    </td>
-                    <td>
-                        <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class=" btn btn-success">Edit</a>
-                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
-                    </td>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.ProductName</td>
+                        <td>@item.Description</td>
+                        <td class="text-success fw-bold">R @item.Price</td>
+                        <td>@item.CategoryName</td>
+                        <td>
+                            <img src="@item.ImageUrl" class="img-thumbnail rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover;" />
+                        </td>
+                        <td>
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm fw-bold">✏️ Edit</a>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm fw-bold">🗑 Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

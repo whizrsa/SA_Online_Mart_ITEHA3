@@ -4,45 +4,59 @@
     ViewData["Title"] = "Edit Product";
 }
 
-<div class="container shadow p-5">
-    <div class="row  pb-2">
-        <h1>Edit Product</h1>
+<div class="container mt-5 p-4 shadow-lg bg-white rounded">
+    <div class="row pb-3 text-center">
+        <h1 class="fw-bold text-dark">✏️ Edit Product</h1>
+        <p class="text-muted">Update the product details below.</p>
     </div>
 
+    <form method="post" class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" asp-for="Id" readonly />
+                    <label asp-for="Id">Product ID</label>
+                </div>
 
-    <form method="post" class="form-floating">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" asp-for="Id" placeholder="Enter product name" readonly="readonly" />
-            <label asp-for="Id">Product Id</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" asp-for="ProductName" placeholder="Enter product name" />
-            <label asp-for="ProductName">Name</label>
-            <span asp-validation-for="ProductName" class="alert-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" asp-for="Description" placeholder="Enter category name" />
-            <label asp-for="Description">Description</label>
-            <span asp-validation-for="Description" class="alert-danger"></span>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" asp-for="ProductName" placeholder="Enter product name" required />
+                    <label asp-for="ProductName">Product Name</label>
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" asp-for="Description" placeholder="Enter product description" required />
+                    <label asp-for="Description">Description</label>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" asp-for="Price" placeholder="Enter product price" required />
+                    <label asp-for="Price">Price (R)</label>
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    <select class="form-select" asp-for="CategoryId" asp-items="Model.Category" required>
+                        <option value="" selected disabled>Select a Category</option>
+                    </select>
+                    <label asp-for="CategoryId">Category</label>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" asp-for="Image" placeholder="Enter image URL" required>
+                    <label asp-for="Image">Image URL</label>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" asp-for="Price" placeholder="Enter Price Name" />
-            <label asp-for="Price">Price</label>
-            <span asp-validation-for="Price" class="alert-danger"></span>
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary fw-bold">⬅️ Back to List</a>
+            <button type="submit" class="btn btn-success fw-bold px-4">✅ Update Product</button>
         </div>
-        <div class="form-floating mb-3">
-            <select class="form-select single-select dropdown" asp-for="CategoryId" asp-items="Model.Category"></select>
-            <label asp-for="CategoryId">Category</label>
-            <span asp-validation-for="CategoryId" class="alert-danger"></span>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" asp-for="Image" placeholder="Enter Image URL">
-            <label asp-for="Image">ImageURL</label>
-            <span asp-validation-for="Image" class="alert-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-success">Update</button>
-        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">Back To List</a>
     </form>
 </div>
