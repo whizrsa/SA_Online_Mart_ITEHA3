@@ -5,48 +5,46 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="row">
-    <div class="col-md-4 mx-auto rounded border p-3">
-        <section>
-            <h2 class="text-center mb-3">Please Log In</h2>
-            <hr />
+<div class="d-flex justify-content-center align-items-center vh-100" style="background-color: #F4F4F4;">
+    <div class="card shadow-lg border-0 rounded" style="width: 400px; background-color: #ffffff;">
+        <div class="card-body p-4">
+            <h3 class="text-center text-dark mb-3">Sign In</h3>
+            <hr class="mb-4">
+
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
             <form id="account" method="post">
-
-                <div class=" mb-3">
-                    <label class="form-label">Email</label>
-                    <input asp-for="Input.Email" class="form-control" placeholder="name@example.com" />
-
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Email Address</label>
+                    <input asp-for="Input.Email" class="form-control" placeholder="Enter your email">
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input asp-for="Input.Password" class="form-control" placeholder="password" />
 
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="Enter your password">
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                    </label>
+
+                <!-- Remember Me -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe">
+                    <label asp-for="Input.RememberMe" class="form-check-label">Remember Me</label>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col d-grid">
-                        <button type="submit" class="btn btn-primary">Log In</button>
-                    </div>
-                    <div class="col d-grid">
-                        <a class="btn btn-outline-primary " href="/" role="button">Cancel</a>
-                    </div>
+                <!-- Buttons -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn text-white fw-bold" style="background-color: #2C033A;">Log In</button>
+                    <a class="btn btn-outline-secondary" href="/" role="button">Cancel</a>
                 </div>
 
-                <div>
-                    <a class="btn btn-link btn-outline-primary" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                <!-- Forgot Password -->
+                <div class="text-center mt-3">
+                    <a class="text-decoration-none" style="color: #2C033A;" asp-page="./ForgotPassword">Forgot your password?</a>
                 </div>
             </form>
-        </section>
+        </div>
     </div>
-
 </div>
