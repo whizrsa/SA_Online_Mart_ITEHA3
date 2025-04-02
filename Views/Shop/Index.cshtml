@@ -5,28 +5,36 @@
 }
 
 <div class="main-page">
-    <div class="album py-5 bg-light">
+    <h2 class="heading text-center my-4 text-dark">Shop Our Products</h2>
+
+    <div class="album">
         <div class="container">
-            <div class="row">
+            <div class="row g-4">
+                <!-- Bootstrap gutter spacing for even row gaps -->
                 @foreach (var item in Model)
                 {
                     <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top" src="@item.ImageUrl" width="80%" height="250" alt="Card image cap">
-                            <div class="card-body">
-                                <p class="card-text"></p>
-                                <p class="card-text">@item.ProductName</p>
-                                <p class="card-text">Price: R @item.Price</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a type="button" asp-controller="Home" asp-action="Detail" asp-route-id="@item.ProductId" class=" btn btn-success">View</a>
-                                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <button type="submit" class="btn btn-outline-secondary">Add to Cart</button>
-                                        </form>
-                                    </div>
-                                    <small class="text-muted">@item.Category.CategoryName</small>
+                        <div class="card shadow-lg border-0 rounded" style="background-color: #2C033A; color: #fff;">
+                            <img class="card-img-top p-3" src="@item.ImageUrl" alt="Product Image"
+                                 style="height: 250px; object-fit: cover; border-radius: 10px;">
+
+                            <div class="card-body text-center">
+                                <h5 class="card-title">@item.ProductName</h5>
+                                <p class="card-text">Price: <strong>R @item.Price</strong></p>
+
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.ProductId"
+                                       class="btn text-white" style="background-color: #8C98A5;">View</a>
+
+                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="productId" value="@item.ProductId" />
+                                        <button type="submit" class="btn btn-outline-light">Add to Cart</button>
+                                    </form>
                                 </div>
+                            </div>
+
+                            <div class="card-footer bg-transparent border-0 text-center">
+                                <span class="badge" style="background-color: #8C98A5;">@item.Category.CategoryName</span>
                             </div>
                         </div>
                     </div>

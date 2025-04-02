@@ -5,41 +5,43 @@
 }
 
 <div class="main-page">
-    <div class="container mt-4">
-        <div class="swiper-container swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
+    <!-- Slider main container -->
+    <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+                <div class="image">
                     <img src="images/img4.jpg" alt="Image 1">
-                    <div class="content">
-                        <span>Jewelry 20% off</span>
-                        <h3>Hot Specials</h3>
-                        <a href="shop.php" class="btnH">Shop Now</a>
-                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="images/img2.jpg" alt="Image 2">
-                    <div class="content">
-                        <span>Jewelry 20% off</span>
-                        <h3>Hot Specials</h3>
-                        <a href="shop.php" class="btnH">Shop Now</a>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <img src="images/img3.jpg" alt="Image 3">
-                    <div class="content">
-                        <span>Jewelry 20% off</span>
-                        <h3>Hot Specials</h3>
-                        <a class="btnH" asp-controller="Shop" asp-action="Index">Shop Now</a>
-                    </div>
+                <div class="content">
+                    <span>Jewelry 20% off</span>
+                    <h3>Hot Specials</h3>
+                    <a href="shop.php" class="btnH">shop now</a>
                 </div>
             </div>
-            <!-- Pagination -->
-            <div class="swiper-pagination"></div>
-            <!-- Navigation -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+            <div class="swiper-slide">
+                <div class="image">
+                    <img src="images/img2.jpg" alt="Image 2">
+                </div>
+                <div class="content">
+                    <span>Jewelry 20% off</span>
+                    <h3>Hot Specials</h3>
+                    <a href="shop.php" class="btnH">shop now</a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="image">
+                    <img src="images/img3.jpg" alt="Image 3">
+                </div>
+                <div class="content">
+                    <span>Jewelry 20% off</span>
+                    <h3>Hot Specials</h3>
+                    <a class="btnH" asp-controller="Shop" asp-action="Index">shop now</a>
+                </div>
+            </div>
+            <!-- Add more slides as needed -->
         </div>
-    </div>
 
         <!-- If we need pagination -->
         <div class="swiper-pagination"></div>

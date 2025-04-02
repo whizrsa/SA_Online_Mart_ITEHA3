@@ -6,7 +6,6 @@ html, body {
     flex-direction: column;
 }
 
-
 body {
     min-height: 100vh;
 }
@@ -82,16 +81,18 @@ footer div{
 
 footer div a {
     text-align: start;
+    
 }
 
 footer div a, footer div a i {
     text-decoration: none;
     color: #7F7184 !important;
-    
 }
 
 footer div a:hover {
     color: #9D00D5;
+    transform: translateY(-2px);
+    transition: all 0.3s ease-in-out;
 }
 
 footer div a i {
