@@ -12,8 +12,8 @@ using SA_Online_Mart.Data;
 namespace SA_Online_Mart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240827233518_RemovedOrders")]
-    partial class RemovedOrders
+    [Migration("20250405232320_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace SA_Online_Mart.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "87d4fc8e-804c-49ba-ad9b-3e49ffce046d",
+                            Id = "17b2a66d-9675-4a19-8685-86d99dd36fdd",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "da4543c0-d93e-438b-82c1-c14699eff209",
+                            Id = "ed61958e-40a5-4b6d-a97d-db93678546d1",
                             Name = "customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -337,18 +337,23 @@ namespace SA_Online_Mart.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ImageFileName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<decimal>("Price")
+                        .HasPrecision(16, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ProductId");
 

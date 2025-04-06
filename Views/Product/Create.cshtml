@@ -1,5 +1,5 @@
 ﻿@using SA_Online_Mart.ViewModel
-@model ProductViewModel
+@model ProductDto
 @{
     ViewData["Title"] = "Create Product";
 }
@@ -10,7 +10,7 @@
         <p class="text-muted">Fill in the details below to create a new product.</p>
     </div>
 
-    <form method="post" class="needs-validation" novalidate>
+    <form method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-floating mb-3">
@@ -33,18 +33,20 @@
             </div>
 
             <div class="col-md-6">
-                <div class="form-floating mb-3">
-                    <select class="form-select" asp-for="CategoryId" asp-items="Model.Category" required>
-                        <option value="" selected disabled>Select a Category</option>
+                <label class="col-sm-4 col-form-label" asp-for="CategoryId">Category</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                        <option value="">Select a Category</option>
                     </select>
-                    <label asp-for="CategoryId">Category</label>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" asp-for="Image" placeholder="Enter image URL" required>
-                    <label asp-for="Image">Image URL</label>
-                    <span asp-validation-for="Image" class="text-danger"></span>
+
+                <div class="mb-3">
+                    <label class="col-sm-4 col-form-label">Image</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" asp-for="ImageFile">
+                        <span asp-validation-for="ImageFile" class="text-danger"></span><!--This will display any validation errors-->
+                    </div>
                 </div>
             </div>
         </div>

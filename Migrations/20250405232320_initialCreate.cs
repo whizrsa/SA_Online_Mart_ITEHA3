@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SA_Online_Mart.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -176,38 +176,16 @@ namespace SA_Online_Mart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 16, scale: 2, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageFileName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -246,40 +224,12 @@ namespace SA_Online_Mart.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItems",
-                columns: table => new
-                {
-                    OrderItemId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderItems", x => x.OrderItemId);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderItems_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CartItems",
                 columns: table => new
                 {
                     CartItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductsProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     CartId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -292,8 +242,8 @@ namespace SA_Online_Mart.Migrations
                         principalTable: "Carts",
                         principalColumn: "CartId");
                     table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductsProductId",
-                        column: x => x.ProductsProductId,
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
@@ -304,8 +254,8 @@ namespace SA_Online_Mart.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "46da6776-d2bf-421f-9813-1eff97d6229d", null, "customer", "CUSTOMER" },
-                    { "a450a8c7-a3d5-4bfe-a0bc-dcf9d98b4dce", null, "admin", "ADMIN" }
+                    { "17b2a66d-9675-4a19-8685-86d99dd36fdd", null, "admin", "ADMIN" },
+                    { "ed61958e-40a5-4b6d-a97d-db93678546d1", null, "customer", "CUSTOMER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -353,9 +303,9 @@ namespace SA_Online_Mart.Migrations
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductsProductId",
+                name: "IX_CartItems_ProductId",
                 table: "CartItems",
-                column: "ProductsProductId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_AppUserId",
@@ -366,21 +316,6 @@ namespace SA_Online_Mart.Migrations
                 name: "IX_Carts_ProductId",
                 table: "Carts",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
-                table: "OrderItems",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_ProductId",
-                table: "OrderItems",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -410,22 +345,16 @@ namespace SA_Online_Mart.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "OrderItems");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Carts");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

@@ -3,6 +3,7 @@ using SA_Online_Mart.Data;
 using Microsoft.AspNetCore.Identity;
 using SA_Online_Mart.Models;
 using Stripe;
+using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart
 {
@@ -24,6 +25,8 @@ namespace SA_Online_Mart
             builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddScoped<IProductService, Services.ProductService>(); // Register the product service
 
             // Add session services
             builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
@@ -71,7 +74,6 @@ namespace SA_Online_Mart
             app.UseRouting();
             app.UseSession(); // Add session middleware here
             app.UseAuthorization();
-
 
             // Default routes
             app.MapControllerRoute(

@@ -1,5 +1,5 @@
 ﻿@using SA_Online_Mart.ViewModel
-@model List<ProductListViewModel>
+@model IEnumerable<Product>
 
 @{
     ViewData["Title"] = "Product List";
@@ -37,13 +37,18 @@
                         <td class="fw-bold">@item.ProductName</td>
                         <td>@item.Description</td>
                         <td class="text-success fw-bold">R @item.Price</td>
-                        <td>@item.CategoryName</td>
+                        <td>@item.Category.CategoryName</td>
                         <td>
-                            <img src="@item.ImageUrl" class="img-thumbnail rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover;" />
+                            <img src="/images/@item.ImageFileName" class="img-thumbnail rounded shadow-sm" style="width: 80px; height: 80px; object-fit: cover;" />
                         </td>
                         <td>
-                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm fw-bold">✏️ Edit</a>
-                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm fw-bold">🗑 Delete</a>
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-success btn-sm fw-bold">✏️ Edit</a>
+                            <form asp-action="Delete" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@item.ProductId" />
+                                <button type="submit" class="btn btn-danger btn-sm fw-bold" onclick="return confirm('Are you sure you want to delete this product?');">
+                                    🗑 Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }

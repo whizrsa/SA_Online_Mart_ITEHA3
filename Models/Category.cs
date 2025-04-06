@@ -8,9 +8,9 @@ namespace SA_Online_Mart.Models
         public int CategoryId { get; set; }
         [Required]
         [Display(Name = "Category Name")]
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; } = "";
 
         // Navigation property
-        public ICollection<Product>? Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

@@ -1,205 +1,205 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
+using SA_Online_Mart.Services;
 using SA_Online_Mart.ViewModel;
+using System;
+using System.Threading.Tasks;
 
 namespace SA_Online_Mart.Controllers
 {
     [Authorize(Roles = "admin")]
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public ProductController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public IActionResult Index()
-        {
-            // Load all categories into a dictionary for quick lookup
-            var categoryDictionary = _context.Categories
-                                              .ToDictionary(c => c.CategoryId, c => c.CategoryName);
+        private readonly IProductService _productService;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-            List<ProductListViewModel> productListViewModelList = new List<ProductListViewModel>();
-            var productList = _context.Products.ToList(); // Execute immediately to avoid deferred execution
-
-            if (productList != null)
-            {
-                foreach (var item in productList)
-                {
-                    ProductListViewModel productListViewModel = new ProductListViewModel()
-                    {
-                        Id = item.ProductId,
-                        ProductName = item.ProductName,
-                        Description = item.Description,
-                        Price = item.Price,
-                        CategoryId = item.CategoryId,
-                        ImageUrl = item.ImageUrl,
-                        // Look up the category name from the dictionary
-                        CategoryName = categoryDictionary.ContainsKey(item.CategoryId) ? categoryDictionary[item.CategoryId] : "Unknown"
-                    };
-                    productListViewModelList.Add(productListViewModel);
-                }
-            }
-            return View(productListViewModelList);
+        public ProductController(IProductService productService, IWebHostEnvironment hostingEnvironment)
+        {
+            this._productService = productService;
+            this._hostingEnvironment = hostingEnvironment;
         }
 
-
-        public IActionResult Create()
+        public async Task<IActionResult> Index()
         {
-            ProductViewModel productCreateViewModel = new ProductViewModel();
-            productCreateViewModel.Category = (IEnumerable<SelectListItem>)_context.Categories.Select(c => new SelectListItem()
-            {
-                Text = c.CategoryName,
-                Value = c.CategoryId.ToString()
-            });
+            var products =  await _productService.GetAllProducts();
 
-            return View(productCreateViewModel);
+            return View(products);
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var categories = await _productService.GetCategories();
+            ViewBag.Categories = new SelectList(categories,"CategoryId", "CategoryName");
+
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ProductViewModel productCreateViewModel)
+        public async Task<IActionResult> Create(ProductDto productDto)
         {
-            productCreateViewModel.Category = (IEnumerable<SelectListItem>)_context.Categories.Select(c => new SelectListItem()
+            var categories = await _productService.GetCategories();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName");
+
+            if(productDto.ImageFile == null)
             {
-                Text = c.CategoryName,
-                Value = c.CategoryId.ToString()
-            });
-            var product = new Product()
-            {
-                ProductName = productCreateViewModel.ProductName,
-                Description = productCreateViewModel.Description,
-                Price = productCreateViewModel.Price,
-                CategoryId = productCreateViewModel.CategoryId,
-                ImageUrl = productCreateViewModel.Image
-            };
-            ModelState.Remove("Category");
-            if (ModelState.IsValid)
-            {
-                _context.Products.Add(product);
-                _context.SaveChanges();
-                TempData["SuccessMsg"] = "Product (" + product.ProductName + ") added successfully.";
-                return RedirectToAction("Index");
+                ModelState.AddModelError("ImageFile", "Please upload an image.");
             }
 
-            return View(productCreateViewModel);
+            if(!ModelState.IsValid)
+            {
+                return View(productDto);
+            }
+
+            // Save the image
+            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            newFileName += Path.GetExtension(productDto.ImageFile!.FileName);
+
+            string imageFullPath = _hostingEnvironment.WebRootPath + "/images/" + newFileName;
+            using (var stream = System.IO.File.Create(imageFullPath))
+            {
+                productDto.ImageFile.CopyTo(stream);
+            }
+
+            //Save the new product in the database
+            Product product = new Product()
+            {
+                ProductName = productDto.ProductName,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                CategoryId = productDto.CategoryId,
+                ImageFileName = newFileName,
+                DateAdded = DateTime.Now,
+            };
+
+            await _productService.Create(product);
+            TempData["SuccessMsg"] = "Product (" + product.ProductName + ") created successfully!";
+            return RedirectToAction("Index");
+
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var productToEdit = _context.Products.Find(id);
-            if (productToEdit != null)
-            {
-                var productViewModel = new ProductViewModel()
-                {
-                    Id = productToEdit.ProductId,
-                    ProductName = productToEdit.ProductName,
-                    Description = productToEdit.Description,
-                    Price = productToEdit.Price,
-                    CategoryId = productToEdit.CategoryId,
-                    Image = productToEdit.ImageUrl,
-                    Category = (IEnumerable<SelectListItem>)_context.Categories.Select(c => new SelectListItem()
-                    {
-                        Text = c.CategoryName,
-                        Value = c.CategoryId.ToString()
-                    })
-                };
-                return View(productViewModel);
-            }
-            else
+            if (id == null)
             {
                 return NotFound();
             }
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(ProductViewModel productViewModel)
-        {
-            // Ensure the category list is fetched immediately
-            productViewModel.Category = _context.Categories.Select(c => new SelectListItem()
-            {
-                Text = c.CategoryName,
-                Value = c.CategoryId.ToString()
-            }).ToList(); // Convert to list to execute immediately
+            var product = await _productService.FindId(id);
 
-            // Map the ProductViewModel to Product entity
-            var product = new Product()
-            {
-                ProductId = productViewModel.Id,
-                ProductName = productViewModel.ProductName,
-                Description = productViewModel.Description,
-                Price = productViewModel.Price,
-                CategoryId = productViewModel.CategoryId,
-                ImageUrl = productViewModel.Image
-            };
-
-            // Ensure that ModelState is valid before updating the product
-            ModelState.Remove("Category");
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Update the product in the database
-                    _context.Products.Update(product);
-                    _context.SaveChanges();
-
-                    TempData["SuccessMsg"] = "Product (" + product.ProductName + ") updated successfully!";
-                    return RedirectToAction("Index");
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception if needed
-                    ModelState.AddModelError(string.Empty, "An error occurred while updating the product." + ex);
-                }
-            }
-
-            // Return the view with the current model if validation or saving fails
-            return View(productViewModel);
-        }
-
-        public IActionResult Delete(int? id)
-        {
-            var productToEdit = _context.Products.Find(id);
-            if (productToEdit != null)
-            {
-                var productViewModel = new ProductViewModel()
-                {
-                    Id = productToEdit.ProductId,
-                    ProductName = productToEdit.ProductName,
-                    Description = productToEdit.Description,
-                    Price = productToEdit.Price,
-                    CategoryId = productToEdit.CategoryId,
-                    Image = productToEdit.ImageUrl,
-                    Category = (IEnumerable<SelectListItem>)_context.Categories.Select(c => new SelectListItem()
-                    {
-                        Text = c.CategoryName,
-                        Value = c.CategoryId.ToString()
-                    })
-                };
-                return View(productViewModel);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteProduct(int? id)
-        {
-            var product = _context.Products.Find(id);
             if (product == null)
             {
                 return NotFound();
             }
-            _context.Products.Remove(product);
-            _context.SaveChanges();
+
+            var categories = await _productService.GetCategories();
+            ViewBag.Categories = new SelectList(categories, "CategoryId", "CategoryName");
+
+            var productDto = new ProductDto()
+            {
+                ProductName = product.ProductName,
+                Description = product.Description,
+                Price = product.Price,
+                CategoryId = product.CategoryId,
+
+            };
+
+            ViewData["ImageFileName"] = product.ImageFileName;
+            ViewData["ProductId"] = id;
+            ViewData["DateAdded"] = product.DateAdded;
+
+            return View(productDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, ProductDto productDto)
+        {
+            var product = await _productService.FindId(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["ImageFileName"] = product.ImageFileName;
+                ViewData["ProductId"] = id;
+                ViewData["DateAdded"] = product.DateAdded.ToString("MM/dd/yyyy");
+                return View(productDto);
+            }
+
+            //update the image file if we have a new image file
+            string newFileName = product.ImageFileName;
+            if (productDto.ImageFile != null)
+            {
+                newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                newFileName += Path.GetExtension(productDto.ImageFile.FileName);
+
+                string imageFullPath = _hostingEnvironment.WebRootPath + "/images/" + newFileName;
+                using (var stream = System.IO.File.Create(imageFullPath))
+                {
+                    productDto.ImageFile.CopyTo(stream);
+                }
+
+                //delete the old image
+                string oldImageFullPath = _hostingEnvironment.WebRootPath + "/images/" + product.ImageFileName;
+                System.IO.File.Delete(oldImageFullPath);
+            }
+
+            // update the product in the database
+            product.ProductName = productDto.ProductName;
+            product.Description = productDto.Description;
+            product.Price = productDto.Price;
+            product.ImageFileName = newFileName;
+            product.CategoryId = productDto.CategoryId; //to update the Category
+
+            await _productService.UpdateProduct(product);
+
+            return RedirectToAction("Index", "Product");
+            
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productToEdit = await _productService.FindId(id);
+
+            if (productToEdit == null)
+            {
+                return NotFound();
+            }
+            return View(productToEdit);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int? id, ProductDto productDto)
+        {
+            var product = await _productService.FindId(id);
+
+            if (product == null)
+            {
+                return RedirectToAction("Index", "Product");
+            }
+
+            // Delete image
+            string imageFullPath = _hostingEnvironment.WebRootPath + "/images/" + product.ImageFileName;
+            System.IO.File.Delete(imageFullPath);
+            
+            await _productService.DeleteProduct(product);
             TempData["SuccessMsg"] = "Product (" + product.ProductName + ") deleted successfully.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Product");
         }
     }
 }

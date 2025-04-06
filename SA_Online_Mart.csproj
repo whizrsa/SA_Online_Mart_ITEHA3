@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\img1.jpg" />
-    <None Include="wwwroot\Images\img2.jpg" />
-    <None Include="wwwroot\Images\img3.jpg" />
+    <None Include="wwwroot\images\img1.jpg" />
+    <None Include="wwwroot\images\img2.jpg" />
+    <None Include="wwwroot\images\img3.jpg" />
   </ItemGroup>
 
   <ItemGroup>

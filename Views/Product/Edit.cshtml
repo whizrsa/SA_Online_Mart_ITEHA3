@@ -1,62 +1,75 @@
 ﻿@using SA_Online_Mart.ViewModel
-@model ProductViewModel
+@model ProductDto
 @{
     ViewData["Title"] = "Edit Product";
 }
 
-<div class="container mt-5 p-4 shadow-lg bg-white rounded">
-    <div class="row pb-3 text-center">
+<div class="container mt-5 p-4 shadow-lg bg-white rounded-4">
+    <div class="text-center mb-4">
         <h1 class="fw-bold text-dark">✏️ Edit Product</h1>
         <p class="text-muted">Update the product details below.</p>
     </div>
 
-    <form method="post" class="needs-validation" novalidate>
-        <div class="row">
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <input type="hidden" name="id" value="@ViewData["ProductId"]" />
+
+        <div class="row g-4">
             <div class="col-md-6">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" asp-for="Id" readonly />
-                    <label asp-for="Id">Product ID</label>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Product ID</label>
+                    <input class="form-control-plaintext text-dark" readonly value="@ViewData["ProductId"]" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" asp-for="ProductName" placeholder="Enter product name" required />
+                    <input type="text" class="form-control" asp-for="ProductName" placeholder="Enter product name" />
                     <label asp-for="ProductName">Product Name</label>
-                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                    <span asp-validation-for="ProductName" class="text-danger small"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" asp-for="Description" placeholder="Enter product description" required />
+                    <input type="text" class="form-control" asp-for="Description" placeholder="Enter description" />
                     <label asp-for="Description">Description</label>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="number" class="form-control" asp-for="Price" placeholder="Enter product price" required />
+                    <input type="number" class="form-control" asp-for="Price" placeholder="Enter price" />
                     <label asp-for="Price">Price (R)</label>
-                    <span asp-validation-for="Price" class="text-danger"></span>
+                    <span asp-validation-for="Price" class="text-danger small"></span>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="form-floating mb-3">
-                    <select class="form-select" asp-for="CategoryId" asp-items="Model.Category" required>
-                        <option value="" selected disabled>Select a Category</option>
+                <div class="mb-3">
+                    <label asp-for="CategoryId" class="form-label fw-semibold">Category</label>
+                    <select class="form-select" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                        <option value="">Select a Category</option>
                     </select>
-                    <label asp-for="CategoryId">Category</label>
-                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" asp-for="Image" placeholder="Enter image URL" required>
-                    <label asp-for="Image">Image URL</label>
-                    <span asp-validation-for="Image" class="text-danger"></span>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Current Image</label>
+                    <div class="border p-2 rounded-3 bg-light text-center">
+                        <img src="/images/@ViewData["ImageFileName"]" class="img-fluid rounded shadow-sm" style="max-height: 180px; object-fit: contain;" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageFile" class="form-label fw-semibold">Upload New Image</label>
+                    <input type="file" class="form-control" asp-for="ImageFile" />
+                    <span asp-validation-for="ImageFile" class="text-danger small"></span>
                 </div>
             </div>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary fw-bold">⬅️ Back to List</a>
-            <button type="submit" class="btn btn-success fw-bold px-4">✅ Update Product</button>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary fw-bold">
+                ⬅️ Back to List
+            </a>
+            <button type="submit" class="btn btn-success fw-bold px-4">
+                ✅ Update Product
+            </button>
         </div>
     </form>
 </div>
