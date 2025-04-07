@@ -117,7 +117,7 @@
         {
             <tr>
                 <td>@item.Product.ProductName</td>
-                <td><img src="@item.Product.ImageFileName" width="100px" alt="Alternate Text" /></td>
+                <td><img src="/images/@item.Product.ImageFileName" width="50px" alt="Alternate Text" /></td>
                 <td>
                     <form asp-action="UpdateCartItem" method="post">
                         <input type="hidden" name="cartItemId" value="@item.CartItemId" />

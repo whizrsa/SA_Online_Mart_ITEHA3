@@ -1,20 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SA_Online_Mart.Data;
+using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart.Controllers
 {
     public class ShopController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public ShopController(ApplicationDbContext context) 
+        private readonly IShopService _shopService;
+        public ShopController(IShopService shopService)
         {
-            _context = context;
+            _shopService = shopService;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            var products = _context.Products.Include(p => p.Category).ToList();
+            var products = await _shopService.GetAllProductsAsync();
+
+            if (products == null)
+            {
+                return NotFound("No Products");
+            }
+
             return View(products);
         }
     }

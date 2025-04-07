@@ -9,6 +9,7 @@ namespace SA_Online_Mart.Models
         public int CartId { get; set; }
 
         public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public Product Product { get; set; }
 
-    }
+}
 }
