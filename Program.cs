@@ -27,6 +27,7 @@ namespace SA_Online_Mart
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddScoped<IProductService, Services.ProductService>(); // Register the product service
+            builder.Services.AddScoped<ICategoryService, CategoryService>(); // Register the category service
 
             // Add session services
             builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache

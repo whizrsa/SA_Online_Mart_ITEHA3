@@ -2,20 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
+using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart.Controllers
 {
     [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(ICategoryService categoryService)
         {
-            _context = context;
+            _categoryService = categoryService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Category> categoryList = _context.Categories;
+            var categoryList = await _categoryService.GetAllCategories();
             return View(categoryList);
         }
 
@@ -26,67 +27,75 @@ namespace SA_Online_Mart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Add(category);
-                _context.SaveChanges();
+                await _categoryService.CreateCategory(category);               
                 TempData["SuccessMsg"] = "Category (" + category.CategoryName + ") added successfully.";
                 return RedirectToAction("Index");
             }
             return View(category);
         }
 
-        public IActionResult Edit(int? categoryId)
+        public async Task<IActionResult> Edit(int? categoryId)
         {
-            var category = _context.Categories.Find(categoryId);
+            var category = await _categoryService.GetCategoryById(categoryId);
 
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category category)
+        public async Task<IActionResult> Edit(Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
+                await _categoryService.UpdateCategory(category);
+
                 TempData["SuccessMsg"] = "Category (" + category.CategoryName + ") updated successfully.";
                 return RedirectToAction("Index");
             }
             return View(category);
         }
 
-        public IActionResult Delete(int? categoryId)
+        public async Task<IActionResult> Delete(int? categoryId)
         {
-            var category = _context.Categories.Find(categoryId);
+            var category = await _categoryService.GetCategoryById(categoryId);
 
             if (category == null)
             {
-                return NotFound();
+                return NotFound("Category does not exist!");
             }
             return View(category);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteCategory(int? categoryId)
+        public async Task<IActionResult> Delete(int? categoryId, Category category)
         {
-            var category = _context.Categories.Find(categoryId);
+            if (categoryId == null)
+            {
+                //return NotFound("Category does not exist!");
+                return RedirectToAction("Index", "Category");
+            }
+
+            var existingCategory = await _categoryService.GetCategoryById(categoryId);         
+
             if (category == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
+
+            await _categoryService.DeleteCategory(category);
+
             TempData["SuccessMsg"] = "Category (" + category.CategoryName + ") deleted successfully.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Category");
         }
     }
 }
