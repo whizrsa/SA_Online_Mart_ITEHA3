@@ -15,7 +15,9 @@ namespace SA_Online_Mart.Services
         public async Task<Product> GetProductById(int? id)
         {
             if (id == null)
+            {
                 return null;
+            }
 
             var product = await _context.Products
                 .Include(p => p.Category)
