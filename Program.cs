@@ -28,6 +28,7 @@ namespace SA_Online_Mart
 
             builder.Services.AddScoped<IProductService, Services.ProductService>(); // Register the product service
             builder.Services.AddScoped<ICategoryService, CategoryService>(); // Register the category service
+            builder.Services.AddScoped<IHomeService, HomeService>();
 
             // Add session services
             builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
