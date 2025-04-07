@@ -1,20 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Data;
+using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart.Controllers
 {
     public class CustomersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(ApplicationDbContext context)
+        public CustomersController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = _context.Users;
+            var users = await _customerService.GetAllCustomersAsync();
             return View(users);
         }
     }
