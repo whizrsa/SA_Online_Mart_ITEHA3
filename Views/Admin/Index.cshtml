@@ -29,6 +29,15 @@
             </div>
         </div>
 
+        <!-- Category Count Box -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 rounded text-center p-4 bg-white">
+                <h3 class="fw-bold text-dark">Total Categories</h3>
+                <p class="fs-4 fw-bold text-secondary">@Model.CategoryCount</p>
+                <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary mt-2">🗂️ Manage Categories</a>
+            </div>
+        </div>
+
         <!-- Customer Count Box -->
         <div class="col-md-4">
             <div class="card shadow-sm border-0 rounded text-center p-4 bg-white">
