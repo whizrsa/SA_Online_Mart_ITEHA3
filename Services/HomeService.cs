@@ -21,17 +21,16 @@ namespace SA_Online_Mart.Services
 
             var product = await _context.Products
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.CategoryId == id);
+                .FirstOrDefaultAsync(p => p.ProductId == id);
 
             return product;
 
         }
-
         public async Task<IEnumerable<Product>> SortProducts()
         {
             var latestProducts = await _context.Products
                 .Include(p => p.Category)
-                .OrderByDescending(p => p.DateAdded)
+                .OrderBy(p => Guid.NewGuid())
                 .Take(6)
                 .ToListAsync();
 

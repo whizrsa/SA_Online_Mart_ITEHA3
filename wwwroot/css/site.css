@@ -12,7 +12,7 @@ body {
 
 main {
     flex-grow: 1;
-    padding: 80px 12px 12px;
+    padding: 76px 0 0; /*80px 12px 12px was the old padding*/
 }
 
 header {

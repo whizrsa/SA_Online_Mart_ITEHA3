@@ -1,46 +1,56 @@
-﻿.main-page
-{
-    margin-top: .1rem;
+﻿.carousel-caption {
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin-bottom: 60px;
+    animation: fadeInUp 1s ease-in-out;
 }
 
-.swiper {
-    width: 100%;
-    height: 400px; /* Adjust this value to make the slider more horizontal */
+.carousel-caption h1 {
+    font-size: 2.8rem;
+    color: #fff;
 }
 
-.swiper-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+.carousel-caption p {
+    color: #f8f9fa;
+    font-size: 1.2rem;
 }
 
-
-.swiper-slide img {
-    width: 100%;
-    height: 80vh; /* Maintain aspect ratio */
-    object-fit: cover; /* Ensures image covers the container while maintaining aspect ratio */
+.carousel .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
 }
 
-.content {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000;
+    border-radius: 50%;
+    padding: 20px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
 }
 
-.swiper-pagination-bullet {
-    background-color: white; /* Customize bullet color */
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    opacity: 1;
 }
 
-.btnH {
-color: antiquewhite;
-font-size: 20px;
-margin: 0px;
-padding: 0px;
-font-weight: 500;
+/* Caption animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 
 /*  home category section starts  */ 
 .heading {

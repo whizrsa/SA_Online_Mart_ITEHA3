@@ -4,95 +4,104 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .carousel-item {
+        height: 500px;
+        position: relative;
+    }
+
+    .carousel-item img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        filter: brightness(75%);
+    }
+
+    .carousel-caption {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    }
+</style>
+
+
 <div class="main-page">
-    <!-- Slider main container -->
-    <div class="swiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide">
-                <div class="image">
-                    <img src="images/img4.jpg" alt="Image 1">
-                </div>
-                <div class="content">
-                    <span>Jewelry 20% off</span>
-                    <h3>Hot Specials</h3>
-                    <a href="shop.php" class="btnH">shop now</a>
-                </div>
-            </div>
-            <div class="swiper-slide">
-                <div class="image">
-                    <img src="images/img2.jpg" alt="Image 2">
-                </div>
-                <div class="content">
-                    <span>Jewelry 20% off</span>
-                    <h3>Hot Specials</h3>
-                    <a href="shop.php" class="btnH">shop now</a>
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade mb-5" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="/images/20250406023754390.jpg" alt="First slide">
+                <div class="carousel-caption text-start">
+                    <h1 class="display-4 font-weight-bold">Explore Quality Products</h1>
+                    <p class="lead">Discover the best deals and finest collections in one place.</p>
+                    <a href="/Shop" class="btn btn-primary btn-lg mt-3">Shop Now</a>
                 </div>
             </div>
-            <div class="swiper-slide">
-                <div class="image">
-                    <img src="images/img3.jpg" alt="Image 3">
-                </div>
-                <div class="content">
-                    <span>Jewelry 20% off</span>
-                    <h3>Hot Specials</h3>
-                    <a class="btnH" asp-controller="Shop" asp-action="Index">shop now</a>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/images/20250408040846703.webp" alt="Second slide">
+                <div class="carousel-caption text-center">
+                    <h1 class="display-4 font-weight-bold">Shop the Latest Trends</h1>
+                    <p class="lead">Stay stylish with our latest arrivals and seasonal offers.</p>
+                    <a href="/Shop" class="btn btn-outline-light btn-lg mt-3">Browse</a>
                 </div>
             </div>
-            <!-- Add more slides as needed -->
+            <div class="carousel-item">
+                <img class="d-block w-100" src="/images/\20250408040633901.webp" alt="Third slide">
+                <div class="carousel-caption text-end">
+                    <h1 class="display-4 font-weight-bold">Great Deals Await</h1>
+                    <p class="lead">Unbeatable prices, limited-time offers. Don’t miss out!</p>
+                    <a href="/Shop" class="btn btn-warning btn-lg mt-3">Grab Deal</a>
+                </div>
+            </div>
         </div>
 
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
-
-
-        <!-- If we need navigation buttons
-            <div class="swiper-button-prev text-light"></div>
-            <div class="swiper-button-next text-light"></div>
-         -->
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
+       
     </div>
 
     <!-- Home Category Section Starts -->
     <h2 class="heading text-center my-4 text-dark">Latest Products</h2>
 
-    <div class="album py-5">
-        <div class="container">
-            <div class="row g-4">
-                <!-- Bootstrap gutter spacing for rows -->
-                @foreach (var item in Model)
-                {
-                    <div class="col-md-4">
-                        <div class="card shadow-lg border-0 rounded" style="background-color: #2C033A; color: #fff;">
-                            <img class="card-img-top p-3" src="/images/@item.ImageFileName" alt="Product Image"
-                                 style="height: 250px; object-fit: cover; border-radius: 10px;">
+    <div class="swiper mySwiper py-4 px-2">
+        <div class="swiper-wrapper">
+            @foreach (var item in Model)
+            {
+                <div class="swiper-slide">
+                    <div class="card shadow border-0 rounded d-flex flex-column justify-content-between"
+                         style="background-color: #2C033A; color: #fff; width: 300px; height: auto;">
 
-                            <div class="card-body text-center">
-                                <h5 class="card-title">@item.ProductName</h5>
-                                <p class="card-text">Price: <strong>R @item.Price</strong></p>
+                        <img class="card-img-top p-3" src="/images/@item.ImageFileName" alt="Product Image"
+                             style="max-height: 200px; object-fit: cover; border-radius: 10px;">
 
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.ProductId"
-                                       class="btn text-white" style="background-color: #8C98A5;">View</a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@item.ProductName</h5>
+                            <p class="card-text">Price: <strong>R @item.Price</strong></p>
 
-                                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button type="submit" class="btn btn-outline-light">Add to Cart</button>
-                                    </form>
-                                </div>
-                            </div>
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@item.ProductId"
+                                   class="btn text-white" style="background-color: #8C98A5;">View</a>
 
-                            <div class="card-footer bg-transparent border-0 text-center">
-                                <span class="badge" style="background-color: #8C98A5;">@item.Category.CategoryName</span>
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <button type="submit" class="btn btn-outline-light">Add to Cart</button>
+                                </form>
                             </div>
                         </div>
+
+                        <div class="card-footer bg-transparent border-0 text-center">
+                            <span class="badge" style="background-color: #8C98A5;">@item.Category?.CategoryName</span>
+                        </div>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
 
-
 </div>
+
