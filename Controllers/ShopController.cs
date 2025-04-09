@@ -13,9 +13,13 @@ namespace SA_Online_Mart.Controllers
             _shopService = shopService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            var products = await _shopService.GetAllProductsAsync();
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+
+            var products = await _shopService.GetAllProductsAsync(sortOrder, searchString);
 
             if (products == null)
             {

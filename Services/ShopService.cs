@@ -12,13 +12,38 @@ namespace SA_Online_Mart.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(string sortOrder, string searchString)
         {
-            var products = await _context.Products
-                .Include(p => p.Category)
-                .ToListAsync();
+            var products = _context.Products
+                    .Include(p => p.Category)
+                    .AsQueryable();
 
-            return products;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var loweredSearch = searchString.ToLower();
+
+                products = products.Where(p =>
+                    p.ProductName.ToLower().Contains(loweredSearch) ||
+                    p.Category.CategoryName.ToLower().Contains(loweredSearch));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(product => product.ProductName);
+                    break;
+                case "Date":
+                    products = products.OrderBy(product => product.DateAdded);
+                    break;
+                case "date_desc":
+                    products = products.OrderByDescending(product => product.DateAdded);
+                    break;
+                default:
+                    products = products.OrderBy(product => product.ProductName);
+                    break;
+            }
+
+            return await products.AsNoTracking().ToListAsync();
         }
     }
 }

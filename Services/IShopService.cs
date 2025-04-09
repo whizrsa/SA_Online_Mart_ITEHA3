@@ -4,6 +4,6 @@ namespace SA_Online_Mart.Services
 {
     public interface IShopService
     {
-        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task<IEnumerable<Product>> GetAllProductsAsync(string sortOrder, string searchString);
     }
 }

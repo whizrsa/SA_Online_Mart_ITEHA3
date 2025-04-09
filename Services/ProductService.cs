@@ -44,7 +44,7 @@ namespace SA_Online_Mart.Services
 
         public async Task<Product> DeleteProduct(Product product)
         {
-            var findProduct = _context.Products.FindAsync(product.ProductId);
+            var findProduct = await _context.Products.FindAsync(product.ProductId);
 
             if (findProduct == null)
             {
