@@ -1,5 +1,35 @@
-﻿<div class="container text-center">
-    <h1>Payment Successful</h1>
-    <p>Thank you for your purchase! Your cart has been cleared.</p>
-    <a class="btn btn-primary" asp-controller="Shop" asp-action="Index">Continue Shopping</a>
+﻿@{
+    ViewData["Title"] = "Payment Successful";
+    var userName = User.Identity?.Name ?? "there"; // fallback if not logged in
+}
+
+<div class="container text-center py-5" style="max-width: 600px;">
+    <div class="card shadow-lg border-0" style="background-color: #f4f0f5; border-radius: 12px;">
+        <div class="card-header text-white" style="background-color: #2C033A; border-top-left-radius: 12px; border-top-right-radius: 12px;">
+            <h2 class="mb-0">🎉 Payment Successful</h2>
+        </div>
+        <div class="card-body">
+            <h4 class="mb-3" style="color: #2C033A;">Thank you, @userName!</h4>
+            <p class="lead" style="color: #6d6072;">
+                We’ve received your payment and your cart has been cleared.
+            </p>
+            <a class="btn btn-custom-purple mt-4" asp-controller="Shop" asp-action="Index">Continue Shopping</a>
+        </div>
+    </div>
 </div>
+
+<style>
+    .btn-custom-purple {
+        background-color: #6d6072;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+        .btn-custom-purple:hover {
+            background-color: #2C033A;
+            color: #fff;
+        }
+</style>

@@ -54,7 +54,7 @@ namespace SA_Online_Mart.Controllers
                 var options = new ChargeCreateOptions
                 {
                     Amount = (long)cart.Items.Sum(item => item.Product.Price * item.Quantity * 100),
-                    Currency = "usd",
+                    Currency = "zar",
                     Description = "Online Mart Purchase",
                     Source = stripeToken,
                 };
@@ -67,7 +67,7 @@ namespace SA_Online_Mart.Controllers
                     // Clear the cart after successful payment
                     await _cartService.ClearCart(userId);
                     TempData["Success"] = "Payment successful!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Success");
                 }
                 else
                 {
@@ -85,6 +85,11 @@ namespace SA_Online_Mart.Controllers
                 TempData["Error"] = $"An error occurred: {ex.Message}";
                 return RedirectToAction("Index", "Cart");
             }
+        }
+
+        public IActionResult Success()
+        {
+            return View();
         }
     }
 }
