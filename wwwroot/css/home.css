@@ -4,7 +4,7 @@
     border-radius: 15px;
     max-width: 600px;
     margin-bottom: 60px;
-    animation: fadeInUp 1s ease-in-out;
+    animation: fadeInUp 2s ease-in-out forwards;
 }
 
 .carousel-caption h1 {
@@ -22,22 +22,6 @@
     padding: 10px 20px;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: #000;
-    border-radius: 50%;
-    padding: 20px;
-    width: 60px;
-    height: 60px;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-}
-
-.carousel-control-prev-icon:hover,
-.carousel-control-next-icon:hover {
-    opacity: 1;
-}
-
 /* Caption animation */
 @keyframes fadeInUp {
     0% {
@@ -50,7 +34,6 @@
         transform: translateY(0);
     }
 }
-
 
 /*  home category section starts  */ 
 .heading {

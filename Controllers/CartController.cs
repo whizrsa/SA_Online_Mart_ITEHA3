@@ -1,110 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
-using Microsoft.AspNetCore.Http;
+using SA_Online_Mart.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace SA_Online_Mart.Controllers
 {
     [Authorize]
     public class CartController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICartService _cartService;
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ICartService cartService)
         {
-            _context = context;
+            _cartService = cartService;
         }
 
-        [HttpPost]
-        public IActionResult AddToCart(int productId)
+        public async Task<IActionResult> Index()
         {
-            var product = _context.Products.Find(productId);
-            var cart = SessionExtensions.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "Cart");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var cart = await _cartService.GetCart(userId);
 
             if (cart == null)
             {
-                cart = new List<CartItem>();
+                cart = new Cart { Items = new List<CartItem>() };
             }
 
-            var cartItem = cart.FirstOrDefault(i => i.Product.ProductId == productId);
+            var total = cart.Items.Sum(i => i.Product.Price * i.Quantity);
+            ViewBag.TotalPrice = total;
 
-            if (cartItem != null)
-            {
-                cartItem.Quantity++;
-            }
-            else
-            {
-                cart.Add(new CartItem
-                {
-                    Product = product,
-                    Quantity = 1
-                });
-            }
+            return View(cart);
+        }
 
-            SessionExtensions.SetObjectAsJson(HttpContext.Session, "Cart", cart);
-
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _cartService.AddToCart(userId, productId, 1);
             return RedirectToAction("Index", "Shop");
         }
 
         [HttpPost]
-        public IActionResult UpdateCartItem(int cartItemId, int quantity)
+        public async Task<IActionResult> UpdateCartItem(int cartItemId, int quantity)
         {
-            var cart = SessionExtensions.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "Cart");
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            var cartItem = cart.FirstOrDefault(i => i.CartItemId == cartItemId);
-
-            if (cartItem != null)
-            {
-                cartItem.Quantity = quantity;
-            }
-            else
-            {
-                return NotFound();
-            }
-
-            SessionExtensions.SetObjectAsJson(HttpContext.Session, "Cart", cart);
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _cartService.UpdateCartItem(userId, cartItemId, quantity);
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult RemoveFromCart(int cartItemId)
+        public async Task<IActionResult> RemoveFromCart(int cartItemId)
         {
-            var cart = SessionExtensions.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "Cart");
-            if (cart == null)
-            {
-                return NotFound();
-            }
-
-            var cartItem = cart.FirstOrDefault(i => i.CartItemId == cartItemId);
-            if (cartItem != null)
-            {
-                cart.Remove(cartItem);
-            }
-
-            SessionExtensions.SetObjectAsJson(HttpContext.Session, "Cart", cart);
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _cartService.RemoveFromCart(userId, cartItemId);
             return RedirectToAction("Index");
-        }
-
-        public IActionResult Index()
-        {
-            var cartItems = SessionExtensions.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "Cart");
-
-            if (cartItems == null)
-            {
-                cartItems = new List<CartItem>();  // Initialize with an empty list
-            }
-
-            var cart = new Cart { Items = cartItems };  // Wrapping items in a Cart object
-            return View(cart);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace SA_Online_Mart
             builder.Services.AddScoped<IAdminService, AdminService>(); // Register the admin service
             builder.Services.AddScoped<ICustomerService, Services.CustomerService>(); // Register the customer service
             builder.Services.AddScoped<IShopService, Services.ShopService>(); // Register the shop service
+            builder.Services.AddScoped<ICartService, CartService>(); // Register the cart service
 
             // Add session services
             builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache

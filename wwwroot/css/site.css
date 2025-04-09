@@ -12,7 +12,13 @@ body {
 
 main {
     flex-grow: 1;
-    padding: 76px 0 0; /*80px 12px 12px was the old padding*/
+    padding: 76px 12px 12px; /*80px 12px 12px was the old padding*/
+}
+
+/* Bypassing the main styling for better presentation */
+.carousel-wrapper {
+    margin-left: -12px;
+    margin-right: -12px;
 }
 
 header {

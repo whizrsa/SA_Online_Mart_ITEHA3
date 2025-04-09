@@ -1,31 +1,145 @@
-﻿@using Microsoft.Extensions.Options
-@inject IOptions<SA_Online_Mart.Data.StripeSettings> Stripe
+﻿@model Cart
 
-@{
-    Layout = "_Layout";
-}
+<div class="container py-5">
+    <div class="row">
+        <!-- Order Recap Section -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-sm" style="border-color: #7F7184;">
+                <div class="card-header text-white" style="background-color: #2C033A;">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                            <div>
+                                <strong>@item.Product.ProductName</strong><br />
+                                <small class="text-muted">Quantity: @item.Quantity</small>
+                            </div>
+                            <div class="text-end">R @(item.Product.Price * item.Quantity)</div>
+                        </div>
+                    }
 
-<div class="text-center">
-    <h3>Checkout Page</h3>
-    <table cellpadding="2" cellspacing="2" border="1">
-        <tr>
-            <th>Total Amount To Pay</th>
-        </tr>
-        <tr>
-            <td>@String.Format("{0:C}", Math.Round(ViewBag.DollarAmount, 2))</td>
-        </tr>
-    </table>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <strong>Total</strong>
+                        <strong>R @Model.Items.Sum(i => i.Product.Price * i.Quantity)</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <form asp-action="Processing" asp-controller="Checkout" method="post">
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="@Stripe.Value.PublishableKey"
-                data-amount="@ViewBag.Total"
-                data-name="SA Online Mart"
-                data-description="Buying Products"
-                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                data-locale="en"
-                data-currency="nzd"
-                data-zip-code="true">
-        </script>
-    </form>
+        <!-- Payment Section -->
+        <div class="col-md-7">
+            <div class="card shadow-lg">
+                <div class="card-header text-white text-center" style="background-color: #2C033A;">
+                    <h3>Checkout</h3>
+                </div>
+
+                <div class="card-body">
+                    <form action="/Checkout/ProcessPayment" method="post" id="payment-form">
+                        <input type="hidden" name="stripeToken" id="stripeToken" />
+
+                        <div class="mb-4">
+                            <label for="card-element" class="form-label h6">Card Payment</label>
+                            <div id="card-element" class="form-control p-2"></div>
+                            <small class="form-text text-muted">
+                                Secure payment powered by Stripe.
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn btn-custom-purple btn-lg w-100">Pay Now</button>
+
+                    </form>
+                </div>
+
+                <div class="card-footer text-center">
+                    <p>We also accept:</p>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/pp-acceptance-medium.png" alt="PayPal" class="mx-2" style="height: 40px;" />
+                        <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/cc-badges-ppmcvdam.png" alt="Credit Cards" class="mx-2" style="height: 40px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    //Integrating Stripe
+    const stripe = Stripe('pk_test_51PsXyGRtHdFnLFNcHg1D5uTp6Bqo0vH9PKXFBGgePDv4vPeqXxq85E7dxTgvM1RLDfOFWBAjOxM7PbLYnx86EXWG00MjgovKli'); // Replace with your Stripe publishable key
+    const elements = stripe.elements();
+    const card = elements.create('card', { style: { base: { fontSize: '16px', color: '#32325d' } } });
+    card.mount('#card-element');
+
+    const form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Disable the button to prevent multiple submissions
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Processing...';
+
+        const { token, error } = await stripe.createToken(card);
+
+        if (error) {
+            // Re-enable the button and show the error message
+            submitButton.disabled = false;
+            submitButton.textContent = 'Pay Now';
+            alert(`Error: ${error.message}`);
+        } else {
+            // Log the token to verify
+            console.log('Stripe Token:', token);
+
+            // Assign token ID to the hidden input field
+            document.getElementById('stripeToken').value = token.id;
+
+            // Submit the form
+            form.submit();
+        }
+    });
+</script>
+
+
+<style>
+    .container {
+        max-width: 960px;
+        margin: auto;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
+    .btn-custom-purple {
+        background-color: #6d6072;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-custom-purple:hover {
+        background-color: #2C033A;
+        color: #fff;
+    }
+
+    #card-element {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .card-header {
+        background-color: #2C033A;
+    }
+
+    .card-body {
+        color: #2C033A;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+    }
+</style>

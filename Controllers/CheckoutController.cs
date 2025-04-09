@@ -1,74 +1,90 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Models;
+using SA_Online_Mart.Services;
 using Stripe;
+using System.Security.Claims;
 
 namespace SA_Online_Mart.Controllers
 {
     public class CheckoutController : Controller
     {
-        [TempData]
-        public string TotalAmount { get; set; }
-
-        //Make Sure the the "Cart" is the same for all sessions. It is case sensitive
-        public IActionResult Index()
+        private readonly ICartService _cartService;
+        public CheckoutController(ICartService cartService)
         {
-            var cart = SessionExtensions.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "Cart");
-            ViewBag.cart = cart;
-
-            // Calculating total amount
-            var totalDollarAmount = cart.Sum(item => item.Product.Price * item.Quantity);
-            ViewBag.DollarAmount = totalDollarAmount;
-
-            // Converting totalDollarAmount to the smallest currency unit (e.g., cents)
-            long totalAmountInCents = Convert.ToInt64(Math.Round(totalDollarAmount, 2) * 100);
-            ViewBag.Total = totalAmountInCents;
-
-            // Storing the total amount in TempData for the next request
-            TempData["TotalAmount"] = totalAmountInCents.ToString();
-
-            return View();
+            _cartService = cartService;
         }
 
-
-        [HttpPost]
-        public IActionResult Processing(string stripeToken, string stripeEmail)
-        { 
-            // Create customer
-            //Future Updates could be allowing a logged in users details to be added to the stripe built in function
-            var optionsCust = new CustomerCreateOptions
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
             {
-                Email = stripeEmail,
-                Name = "Mr/Mrs",
-                Phone = "04-234567"
-            };
-
-            var serviceCust = new CustomerService();
-            Customer customer = serviceCust.Create(optionsCust);
-
-            // Retrieve the total amount from TempData
-            long totalAmount = Convert.ToInt64(TempData["TotalAmount"]);
-
-            // Create charge
-            var optionsCharge = new ChargeCreateOptions
-            {
-                Amount = totalAmount,
-                Currency = "NZD",
-                Description = "Buying Products",
-                Source = stripeToken,
-                ReceiptEmail = stripeEmail
-            };
-
-            var serviceCharge = new ChargeService();
-
-            Charge charge = serviceCharge.Create(optionsCharge);
-
-            if (charge.Status == "succeeded")
-            {
-                ViewBag.AmountPaid = Convert.ToDecimal(charge.Amount) / 100;
-                ViewBag.Customer = customer.Name;
+                TempData["Error"] = "User is not authenticated.";
+                return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            var cart = await _cartService.GetCart(userId);
+            if (cart == null || !cart.Items.Any())
+            {
+                TempData["Error"] = "Your cart is empty.";
+                return RedirectToAction("Index", "Cart");
+            }
+
+            return View(cart);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCheckoutSession(string stripeToken)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                TempData["Error"] = "User is not authenticated.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var cart = await _cartService.GetCart(userId);
+            if (cart == null || !cart.Items.Any())
+            {
+                TempData["Error"] = "Your cart is empty.";
+                return RedirectToAction("Index", "Cart");
+            }
+            try
+            {
+                var options = new ChargeCreateOptions
+                {
+                    Amount = (long)cart.Items.Sum(item => item.Product.Price * item.Quantity * 100),
+                    Currency = "usd",
+                    Description = "Online Mart Purchase",
+                    Source = stripeToken,
+                };
+
+                var service = new ChargeService();
+                var charge = service.Create(options);
+
+                if (charge.Status == "succeeded")
+                {
+                    // Clear the cart after successful payment
+                    await _cartService.ClearCart(userId);
+                    TempData["Success"] = "Payment successful!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Error"] = "Payment failed. Please try again.";
+                    return RedirectToAction("Index", "Cart");
+                }
+            }
+            catch (StripeException ex)
+            {
+                TempData["Error"] = $"Payment failed: {ex.Message}";
+                return RedirectToAction("Index", "Cart");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"An error occurred: {ex.Message}";
+                return RedirectToAction("Index", "Cart");
+            }
         }
     }
 }
