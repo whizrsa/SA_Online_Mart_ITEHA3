@@ -39,7 +39,7 @@ namespace SA_Online_Mart.Services
                     products = products.OrderByDescending(product => product.DateAdded);
                     break;
                 default:
-                    products = products.OrderBy(product => product.ProductName);
+                    products = products.OrderBy(product => Guid.NewGuid());
                     break;
             }
 

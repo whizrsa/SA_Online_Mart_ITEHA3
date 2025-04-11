@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart.Controllers
 {
-    [Authorize(Roles = "customer")]
     public class ShopController : Controller
     {
         private readonly IShopService _shopService;
