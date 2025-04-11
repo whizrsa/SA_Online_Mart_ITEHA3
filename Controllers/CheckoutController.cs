@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Models;
 using SA_Online_Mart.Services;
 using Stripe;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace SA_Online_Mart.Controllers
 {
+    [Authorize(Roles = "customer")]
     public class CheckoutController : Controller
     {
         private readonly ICartService _cartService;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SA_Online_Mart.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "customer")]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
