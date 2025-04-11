@@ -13,10 +13,24 @@ namespace SA_Online_Mart.Controllers
             _customerService = customerService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var users = await _customerService.GetAllCustomersAsync();
-            return View(users);
+            var customerList = await _customerService.GetAllCustomers(searchString);
+
+            ViewData["CurrentFilter"] = searchString;
+            return View(customerList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var customerMember = await _customerService.Delete(id);
+            if (customerMember == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

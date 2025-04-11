@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SA_Online_Mart.Data;
 
@@ -11,9 +12,11 @@ using SA_Online_Mart.Data;
 namespace SA_Online_Mart.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250410014123_UpdateRole")]
+    partial class UpdateRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace SA_Online_Mart.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a1f2b3c4-d5e6-47f8-9a0b-c1d2e3f4a5b6",
+                            Id = "e9a1b6c4-7f6b-49f0-a5e5-ceddb46e5c2b",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b6a5f4e3-d2c1-0b9a-8f7e-6d5c4b3f2a1f",
+                            Id = "c3f47a63-92c4-432f-8146-6cdb54e4f4e2",
                             Name = "customer",
                             NormalizedName = "CUSTOMER"
                         });

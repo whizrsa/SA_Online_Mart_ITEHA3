@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using SA_Online_Mart.Models;
 
 public class DataInitializer
@@ -7,19 +8,30 @@ public class DataInitializer
     {
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+        var logger = serviceProvider.GetRequiredService<ILogger<DataInitializer>>();
 
         // Seed roles
-        if (!await roleManager.RoleExistsAsync("admin"))
-        {
-            await roleManager.CreateAsync(new IdentityRole("admin"));
-        }
-
-        if (!await roleManager.RoleExistsAsync("customer"))
-        {
-            await roleManager.CreateAsync(new IdentityRole("customer"));
-        }
+        await SeedRoleAsync(roleManager, "admin", logger);
+        await SeedRoleAsync(roleManager, "customer", logger);
 
         // Seed Admin
+        await SeedAdminUserAsync(userManager, logger);
+
+        // Seed Customers
+        await SeedCustomersAsync(userManager, logger);
+    }
+
+    private static async Task SeedRoleAsync(RoleManager<IdentityRole> roleManager, string roleName, ILogger logger)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            logger.LogInformation($"Creating the {roleName} role.");
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+
+    private static async Task SeedAdminUserAsync(UserManager<AppUser> userManager, ILogger logger)
+    {
         var adminEmail = "admin@gmail.com";
         var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
@@ -40,11 +52,18 @@ public class DataInitializer
 
             if (result.Succeeded)
             {
+                logger.LogInformation("Admin user created successfully.");
                 await userManager.AddToRoleAsync(adminUser, "admin");
             }
+            else
+            {
+                logger.LogError("Failed to create admin user: {Errors}", string.Join(", ", result.Errors));
+            }
         }
+    }
 
-        // Seed 20 Customers
+    private static async Task SeedCustomersAsync(UserManager<AppUser> userManager, ILogger logger)
+    {
         for (int i = 1; i <= 20; i++)
         {
             string email = $"customer{i}@gmail.com";
@@ -67,7 +86,17 @@ public class DataInitializer
 
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(customerUser, "customer");
+                    logger.LogInformation($"Customer {i} created successfully.");
+                    var roleResult = await userManager.AddToRoleAsync(customerUser, "customer");
+
+                    if (!roleResult.Succeeded)
+                    {
+                        logger.LogError($"Failed to assign 'customer' role to {email}: {string.Join(", ", roleResult.Errors)}");
+                    }
+                }
+                else
+                {
+                    logger.LogError($"Failed to create customer {i}: {string.Join(", ", result.Errors)}");
                 }
             }
         }

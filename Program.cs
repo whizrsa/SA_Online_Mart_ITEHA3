@@ -55,11 +55,11 @@ namespace SA_Online_Mart
                 try
                 {
                     await DataInitializer.SeedRolesAndAdminAsync(services);
+                    Console.WriteLine("Database seeding completed successfully.");
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
+                    Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
                 }
             }
 

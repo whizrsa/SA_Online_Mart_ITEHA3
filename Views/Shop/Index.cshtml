@@ -4,6 +4,17 @@
     ViewData["Title"] = "Shop Page";
 }
 
+<!-- Banner Section -->
+<div style="margin-left: -12px; margin-right: -12px;"> <!-- Negate the main padding -->
+    <div class="banner-section text-center text-white py-5" style="background: linear-gradient(135deg, #2C033A, #8C98A5);">
+        <div class="container">
+            <h1 class="display-4 fw-bold">🛍️ Welcome to SA Online Mart</h1>
+            <p class="lead">Explore a wide variety of products. Great deals. Fast delivery. Trusted service.</p>
+            <a asp-action="Index" class="btn btn-light btn-lg mt-3">Start Shopping</a>
+        </div>
+    </div>
+</div>
+
 <div class="main-page py-4" style="background-color: #f5f5f5;">
     <form asp-action="Index" method="get" class="mb-4">
         <div class="container">
@@ -64,7 +75,7 @@
     </div>
 </div>
 
-<!-- Custom Button Styling -->
+<!-- Custom Styling -->
 <style>
     .btn-custom-purple {
         background-color: #2C033A;
@@ -87,4 +98,5 @@
         padding: 0.4em 0.8em;
         border-radius: 1rem;
     }
+    
 </style>

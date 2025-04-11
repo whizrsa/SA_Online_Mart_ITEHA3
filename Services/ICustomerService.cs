@@ -4,6 +4,8 @@ namespace SA_Online_Mart.Services
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<AppUser>> GetAllCustomersAsync();
+        Task<IEnumerable<AppUser>> GetAllCustomers(string searchString);
+        Task<AppUser> FindById(string id);
+        Task<AppUser> Delete(string id);
     }
 }
