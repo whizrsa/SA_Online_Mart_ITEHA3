@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SA_Online_Mart.Models;
 using SA_Online_Mart.Services;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SA_Online_Mart.Controllers
 {

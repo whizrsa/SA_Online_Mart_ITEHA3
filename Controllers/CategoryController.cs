@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
 using SA_Online_Mart.Services;
 
@@ -31,7 +30,7 @@ namespace SA_Online_Mart.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.CreateCategory(category);               
+                await _categoryService.CreateCategory(category);
                 TempData["SuccessMsg"] = "Category (" + category.CategoryName + ") added successfully.";
                 return RedirectToAction("Index");
             }
@@ -85,7 +84,7 @@ namespace SA_Online_Mart.Controllers
                 return RedirectToAction("Index", "Category");
             }
 
-            var existingCategory = await _categoryService.GetCategoryById(categoryId);         
+            var existingCategory = await _categoryService.GetCategoryById(categoryId);
 
             if (category == null)
             {

@@ -1,6 +1,5 @@
 ﻿using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace SA_Online_Mart.Services
 {

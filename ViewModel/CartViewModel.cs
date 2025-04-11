@@ -1,6 +1,4 @@
 ﻿using SA_Online_Mart.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace SA_Online_Mart.ViewModel
 {

@@ -1,12 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SA_Online_Mart.Data;
-using SA_Online_Mart.Models;
 using SA_Online_Mart.Services;
-using SA_Online_Mart.ViewModel;
-using System.Threading.Tasks;
 
 namespace SA_Online_Mart.Controllers
 {

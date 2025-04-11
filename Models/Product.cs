@@ -1,6 +1,5 @@
-﻿using System.Drawing;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 
 namespace SA_Online_Mart.Models
 {

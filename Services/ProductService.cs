@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
-using SA_Online_Mart.ViewModel;
 
 namespace SA_Online_Mart.Services
 {

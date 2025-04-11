@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SA_Online_Mart.Data;
 using SA_Online_Mart.Services;
 
 namespace SA_Online_Mart.Controllers

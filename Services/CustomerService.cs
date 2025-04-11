@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using SA_Online_Mart.Data;
 using SA_Online_Mart.Models;
 
 namespace SA_Online_Mart.Services
